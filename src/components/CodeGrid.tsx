@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { ZoomIn, ZoomOut, Plus, Terminal } from 'lucide-react';
+import DOMPurify from 'dompurify';
 
 interface Tile {
   id: string;
@@ -58,14 +59,32 @@ export const CodeGrid = () => {
     setIsEditing(true);
   };
 
+  const sanitizeHtml = (html: string): string => {
+    // Configure DOMPurify to be more restrictive
+    const config = {
+      ALLOWED_TAGS: ['div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong', 'em', 'br', 'img', 'a', 'ul', 'ol', 'li', 'style'],
+      ALLOWED_ATTR: ['style', 'class', 'src', 'alt', 'href', 'target'],
+      ALLOW_DATA_ATTR: false,
+      FORBID_SCRIPT: true,
+      FORBID_TAGS: ['script', 'iframe', 'object', 'embed', 'form', 'input', 'button'],
+      FORBID_ATTR: ['onclick', 'onload', 'onerror', 'onmouseover', 'onfocus', 'onblur'],
+      MAX_SIZE: 2048 // 2KB limit
+    };
+    
+    return DOMPurify.sanitize(html, config);
+  };
+
   const saveTile = () => {
     if (!selectedTile) return;
+    
+    // Sanitize HTML before saving
+    const sanitizedHtml = sanitizeHtml(editingHtml);
     
     const newTile: Tile = {
       id: `${selectedTile.x}-${selectedTile.y}`,
       x: selectedTile.x,
       y: selectedTile.y,
-      html: editingHtml,
+      html: sanitizedHtml,
       timestamp: Date.now()
     };
 
