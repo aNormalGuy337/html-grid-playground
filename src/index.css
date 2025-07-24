@@ -2,41 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* CodePlace - Cyberpunk HTML Grid World Design System
+Dark hacker aesthetic with neon accents and terminal vibes
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core dark theme */
+    --background: 220 13% 9%;
+    --foreground: 180 100% 90%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Cards and surfaces */
+    --card: 220 13% 12%;
+    --card-foreground: 180 100% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 13% 8%;
+    --popover-foreground: 180 100% 90%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary neon cyan */
+    --primary: 180 100% 50%;
+    --primary-foreground: 220 13% 9%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary terminal green */
+    --secondary: 120 100% 40%;
+    --secondary-foreground: 220 13% 9%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted dark grays */
+    --muted: 220 13% 15%;
+    --muted-foreground: 180 20% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent neon purple */
+    --accent: 280 100% 60%;
+    --accent-foreground: 220 13% 9%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive neon red */
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 220 13% 9%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders and inputs */
+    --border: 180 30% 25%;
+    --input: 220 13% 18%;
+    --ring: 180 100% 50%;
 
-    --radius: 0.5rem;
+    /* Grid and layout */
+    --grid-line: 180 50% 20%;
+    --grid-glow: 180 100% 50%;
+    --tile-border: 180 30% 30%;
+    --tile-glow: 280 100% 60%;
+
+    /* Terminal effects */
+    --terminal-glow: 120 100% 40%;
+    --code-bg: 220 13% 8%;
+
+    --radius: 0.25rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +119,62 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-mono;
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--grid-glow) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, hsl(var(--accent) / 0.1) 0%, transparent 50%);
+  }
+
+  /* Custom scrollbar for cyberpunk aesthetic */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+
+  /* Grid glow effects */
+  .grid-glow {
+    box-shadow: 
+      0 0 10px hsl(var(--grid-glow) / 0.3),
+      inset 0 0 10px hsl(var(--grid-glow) / 0.1);
+  }
+
+  .tile-glow {
+    box-shadow: 
+      0 0 15px hsl(var(--tile-glow) / 0.4),
+      0 0 30px hsl(var(--tile-glow) / 0.2);
+  }
+
+  .terminal-glow {
+    text-shadow: 0 0 10px hsl(var(--terminal-glow) / 0.8);
+  }
+
+  /* Animation for terminal typing effect */
+  @keyframes terminal-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .terminal-cursor::after {
+    content: '█';
+    animation: terminal-blink 1s infinite;
+    color: hsl(var(--primary));
+  }
+
+  /* Smooth transitions for all interactive elements */
+  * {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }

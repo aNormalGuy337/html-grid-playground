@@ -52,6 +52,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// CodePlace specific colors
+				'grid-line': 'hsl(var(--grid-line))',
+				'grid-glow': 'hsl(var(--grid-glow))',
+				'tile-border': 'hsl(var(--tile-border))',
+				'tile-glow': 'hsl(var(--tile-glow))',
+				'terminal-glow': 'hsl(var(--terminal-glow))',
+				'code-bg': 'hsl(var(--code-bg))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
